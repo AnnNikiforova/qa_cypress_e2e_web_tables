@@ -7,8 +7,7 @@ const generateUser = () => {
     email: faker.internet.email(),
     age: faker.number.int({ min: 18, max: 80 }),
     salary: faker.number.int({ min: 10000, max: 50000 }),
-    department: faker.commerce.department(),
-    password: faker.internet.password()
+    department: faker.commerce.department()
   };
 };
 

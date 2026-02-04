@@ -10,23 +10,23 @@ Cypress.on('uncaught:exception', () => {
   return false;
 });
 
-const updatedUser = {
-  firstName: faker.person.firstName(),
-  lastName: faker.person.lastName(),
-  email: faker.internet.email(),
-  age: faker.number.int({ min: 18, max: 80 }),
-  salary: faker.number.int({ min: 10000, max: 50000 }),
-  department: faker.commerce.department(),
-  password: faker.internet.password()
-};
-
 describe('Web Tables page', () => {
   let user;
+  let updatedUser;
 
   beforeEach(() => {
     cy.task('generateUser').then((generatedUser) => {
       user = generatedUser;
     });
+
+    updatedUser = {
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      email: faker.internet.email(),
+      age: faker.number.int({ min: 18, max: 80 }),
+      salary: faker.number.int({ min: 10000, max: 50000 }),
+      department: faker.commerce.department()
+    };
 
     webTablesPage.visit();
   });
@@ -72,8 +72,6 @@ describe('Web Tables page', () => {
     webTablesPage.rows.should('contain', user.firstName);
 
     webTablesPage.deleteWorker(user.email);
-
-    cy.reload();
 
     webTablesPage.verifyWorkerNotExists(user.email);
   });

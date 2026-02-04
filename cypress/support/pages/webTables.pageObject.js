@@ -93,15 +93,18 @@ class WebTablesPage {
   }
 
   deleteAllWorkers() {
-    cy.get('body').then(() => {
-      cy.get('[title="Delete"]').then(($buttons) => {
-        const count = $buttons.length;
+    const deleteNext = () => {
+      cy.get('body').then(() => {
+        const $buttons = Cypress.$('[title="Delete"]');
 
-        for (let i = 0; i < count; i++) {
-          cy.get('[title="Delete"]').first().click();
+        if ($buttons.length > 0) {
+          cy.wrap($buttons.first()).click();
+          deleteNext();
         }
       });
-    });
+    };
+
+    deleteNext();
   }
 
   search(value) {
